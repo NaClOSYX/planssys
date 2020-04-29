@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>民航定票管理系统</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet"/>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+</head>
+
+<body>
+
+<div th:replace="commons/commons.html::topbar(active='index.html')"></div>
+<div class="row mb-2 ">
+    <div class="col-md-3">
+        <div style="margin-left: 50px;"
+             class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-fixed">
+            <div class="col p-4 d-flex flex-column position-static">
+
+                <br/>
+                <h3 class=text-center>查询城市</h3>
+                <form th:action="@{/searchCity}" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">出发城市</label>
+                        <input type="text" class="form-control" name="startCity" id="exampleInputEmail1"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">到达城市</label>
+                        <input type="text" class="form-control" name="endCity" id="exampleInputPassword1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">出发日期</label>
+                        <input type="text" class="form-control datetimepicker-input" id="date" name="startDate"
+                               data-toggle="datetimepicker" data-target="#datetimepicker5"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">查询</button>
+
+                </form>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <div class="col-md-8 order-md-1">
+                    <div class="mb-3">
+                        <label>出发城市</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" th:value="${flightView.getStartCity()}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>到达城市</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" th:value="${flightView.getEndCity()}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>出发日期</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                   th:value="${#dates.format(flightView.getStartDate(), 'yyyy-MM-dd')}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>出发时间</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                   th:value="${#dates.format(flightView.getStartTime(), 'HH:mm:ss')}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>到达时间</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                   th:value="${#dates.format(flightView.getEndTime(), 'HH:mm:ss')}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>经济舱</label>
+                            <div class="input-group">
+                                <input type="button" class="form-control" th:value="'剩余:'+${restEconomySeat}+'张'"
+                                       disabled>
+                                <a class=" btn btn-sm btn-primary" onclick="return confirm('是否购买')"
+                                   th:text="${flightView.getEconomyPrice()}+'元'"
+                                   th:href="@{/purchase/economy/}+${flightView.getFlightId()}"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>头等舱</label>
+                            <div class="input-group">
+                                <input type="button" class="form-control" th:value="'剩余:'+${restFirstSeat}+'张'"
+                                       disabled>
+                                <a class=" btn btn-sm btn-primary" onclick="return confirm('是否购买')"
+                                   th:text="${flightView.getFirstPrice()}+'元'"
+                                   th:href="@{/purchase/first/}+${flightView.getFlightId()}"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="commons/commons.html::Copyright"></footer>
+
+</body>
+<script type="text/javascript">
+    $(function () {
+        $('#date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: 'zh-CN'
+        });
+        $('#date').datetimepicker('show');
+        $('#date').datetimepicker('hide');
+        $('#date').datetimepicker('update');
+    });
+</script>
+
+</html>

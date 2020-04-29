@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naclo.dao.SeatNumViewDao">
+
+<select id="getAllFirstSeatById" resultType="com.naclo.pojo.seatNumView">
+    SELECT * FROM dbo.seatNumView
+    where flightId=#{flightId} AND seatNum LIKE 'F%'
+</select>
+    <select id="getAllEconomySeatById" resultType="com.naclo.pojo.seatNumView">
+        SELECT * FROM dbo.seatNumView
+        where flightId=#{flightId} AND seatNum LIKE 'E%'
+    </select>
+    <select id="getAllFirstSeatCountById" resultType="int">
+        SELECT COUNT(flightId) FROM seatNumView
+        where flightId=#{flightId} AND seatNum LIKE 'F%'
+    </select>
+    <select id="getAllEconomySeatCountById" resultType="int">
+        SELECT COUNT(flightId) FROM dbo.seatNumView
+        where flightId=#{flightId} AND seatNum LIKE 'E%'
+    </select>
+
+    <select id="isSeatExistByIdAndSeatNum" resultType="int">
+        SELECT COUNT(flightId) FROM seatNumView
+        where flightId=#{flightId} AND seatNum = #{seatNum}
+    </select>
+
+</mapper>

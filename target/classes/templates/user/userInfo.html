@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>民航定票管理系统</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <link th:href="@{/css/LoginStyle.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+
+<nav th:replace="commons/commons.html::topbar(active='index.html')"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="~{commons/commons.html::slidebar(active='userInfo.html')}"></nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="text-center">
+                <form class="form-signin" method="post" th:action="@{/customerUpdate}">
+                    <h1 class="h3 mb-3 font-weight-normal">修改信息</h1>
+                    <input type="hidden" class="form-control" th:value="${customer.getCustomerId()}" name="customerId"
+                           required="" autofocus="">
+                    <input type="text" class="form-control" th:value="${customer.getUsername()}" placeholder="用户名"
+                           name="username" required="" autofocus="">
+                    <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+                    <br th:if="${#strings.isEmpty(msg)}"/>
+                    <input type="text" class="form-control" th:value="${customer.getRealName()}" placeholder="真实姓名"
+                           name="realName" required="" autofocus="">
+                    <br/>
+                    <input type="text" class="form-control" th:value="${customer.getNationality()}" placeholder="国籍"
+                           name="nationality" required="" autofocus="">
+                    <br/>
+                    <input type="text" class="form-control" th:value="${customer.getIdCard()}" placeholder="身份证"
+                           name="idCard" required="" autofocus="">
+                    <br/>
+                    <button class="btn btn-lg btn-primary btn-block" id="register" type="submit"  onclick="return confirm('是否修改')">修改</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+
+<footer th:replace="commons/commons.html::Copyright"></footer>
+
+</body>
+
+</html>

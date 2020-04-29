@@ -1,0 +1,24 @@
+{
+  "name" : "Flightstate",
+  "comment" : null,
+  "fullColumn" : [ {
+    "name" : "flightstatecode",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "flightstate",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "aaa",
+  "savePath" : "./src/main/java/aaa",
+  "saveModelName" : "planesys"
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naclo.dao.TicketDao">
+
+
+    <update id="deleteTicketById" parameterType="int">
+        update dbo.ticket
+        set ticketStateCode=2
+        where ticketId = #{ticketId}
+    </update>
+    <insert id="insertTicket" parameterType="com.naclo.pojo.Ticket">
+        insert into dbo.ticket(customerId,flightId,seatNum,ticketPrice)
+        values(#{customerId},#{flightId},#{seatNum},#{ticketPrice})
+    </insert>
+
+</mapper>
